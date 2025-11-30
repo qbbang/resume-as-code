@@ -185,7 +185,7 @@
 // MARK: - Kruly Description
 #section-header("주요 경력 (iOS)")
 
-#company-header("컬리", "2021.10 – 현재", "검색·추천 도메인 iOS 리드", color: rgb("#5a31f4"))
+#company-header("컬리", "2021.10 – 현재", "검색·추천 도메인 iOS 리드 | 컬리", color: rgb("#5a31f4"))
 
 #company-summary(
   ("Architecture", "Performance", "DevOps", "Infrastructure", "Data Culture"), 
@@ -405,103 +405,155 @@
 */
 
 
-// // 2. KST Mobility
-// #company-header("케이에스티모빌리티", "2020.10 – 2021.10", "iOS 개발 / 마카롱M")
+// MARK: - KST Mobility
+#company-header("KST Mobility (마카롱M)", "2020.10 – 2021.10", "iOS 개발자", color: rgb("#333333"))
 
-// #company-summary(
-//   ("Modular Architecture", "SDK Design", "Real-time", "Optimization"),
-//   [모놀리식의 한계를 넘는 모듈화. RIBs 아키텍처 도입으로 복잡한 모빌리티 서비스의 유지보수성을 확보했습니다.]
-// )
+#company-summary(
+  ("RIBs Architecture", "SDK Development", "App Clip", "Optimization"), 
+  [외부 연동을 위한 택시 호출 코어 SDK 개발 및 App Clip을 도입했습니다. 특히 Uber RIBs 아키텍처로 점진적으로 리뉴얼하여, 지도 기반 서비스의 고질적인 메모리 누수 문제를 아키텍처 레벨에서 해결했습니다.]
+)
 
-// #project-item(
-//   "RIBs 아키텍처 도입 및 지도 자원 최적화",
-//   "2020.10 - 2021.10",
-//   // Situation
-//   [메모리 효율 저하.\ MVP 패턴의 강결합으로 지도 인스턴스 재사용이 불가능했습니다.],
-//   // Behavior
-//   [비즈니스 로직 모듈화.\ Uber RIBs를 도입하고 지도 뷰를 분리하여 리팩토링했습니다.],
-//   // Impact
-//   [복잡도 제어 및 유지보수성 강화.\ 상태(State) 기반 라우팅으로 복잡한 배차 시나리오를 단순화하고, 모듈 간 의존성을 명확히 분리했습니다.]
-// )
+#project-item(
+  "[SDK & Extension] 외부 호출 코어 SDK 개발 및 App Clip 구현",
+  "21.04 - 21.10",
+  // Situation
+  [
+    *서비스 접근성 확대 및 외부 연동 니즈.* \
+    외부 앱에서 택시 호출 기능을 활용할 수 있는 코어 SDK가 필요했으며,\ 호출 수 향상을 위한 경량화된 진입점(App Clip) 구축이 요구되었습니다.
+  ],
+  // Behavior
+  [
+    *SDK 설계 및 App Clip 10MB 최적화.* \
+    Decorator/Strategy 패턴을 활용해 확장 가능한 SDK 구조를 설계했습니다.\ App Clip 도입 시 10MB 제한을 준수하기 위해 리소스를 최적화하고 Apple App Site Association을 연동했습니다.
+  ],
+  // Impact
+  [
+    *서비스 확장 기반 마련.* \
+    외부 제휴처를 위한 호출 SDK를 배포하고, App Clip을 통해 앱 설치 없이도 즉시 호출 가능한 환경을 구축하여\ 사용자 유입 경로를 다각화했습니다.
+  ]
+)
 
-// #project-item(
-//   "호출 코어 SDK 모듈화 및 실시간성 개선 (SSE)",
-//   "2020.10 - 2021.10",
-//   // Situation
-//   [확장성 한계.\ 앱 종속적인 호출 로직과 비효율적인 통신 방식이 문제였습니다.],
-//   // Behavior
-//   [핵심 로직 SDK 분리.\ 독립 SDK로 분리하고 SSE를 도입하여 통신을 최적화했습니다.],
-//   // Impact
-//   [실시간성 확보.\ 호출 응답 속도를 개선하고 비즈니스 확장의 기반을 마련했습니다.]
-// )
+#project-item(
+  "[Architecture & Optimization] 마카롱M RIBs 리뉴얼 및 메모리 누수 해결",
+  "20.10 - 21.02",
+  // Situation: '문제 감지'와 '도구를 통한 원인 규명' 강조
+  [
+    *Instruments 프로파일링을 통한 고용량 메모리 릭(Leak) 발견.* \
+    화면 진입 시 메모리 사용량이 비정상적으로 증가함을 감지하고 Instruments로 추적했습니다.\ 지도 인스턴스가 해제되지 않고 재진입 시마다 100MB씩 중복 누적되는 치명적인 버그를 찾아냈습니다.
+  ],
+  // Behavior: RIBs 도입을 통한 해결 (기존 유지)
+  [
+    *RIBs 아키텍처 도입 및 모듈 생명주기 제어.* \
+    Router를 통해 지도 모듈을 명확히 Attach/Detach 하는 구조를 설계하여,\ 화면 이탈 시 강한 참조를 끊고 메모리가 즉시 해제되도록 구현했습니다.
+  ],
+  // Impact: 성과 (기존 유지)
+  [
+    *메모리 누수 100% 해결 및 앱 안정성 확보.* \
+    Instruments 재검증 결과 메모리 누수 0건을 달성했으며, 복잡한 지도 상태 관리를 아키텍처 레벨에서 통제하여\ 크래시 없는(Crash-free) 안정적인 서비스를 구축했습니다.
+  ]
+)
+// MARK: - Bejewel
+#company-header("Bejewel", "2019.07 – 2020.08", "iOS 개발자 | 아몬즈", color: rgb("#333333"))
 
-// // 3. Visual
-// #company-header("비주얼", "2019.07 – 2020.08", "iOS 개발 / 아몬즈")
+#company-summary(
+  ("Commerce UI", "Admin Tool", "RxSwift", "Refactoring"), 
+  [커머스 핵심인 태그/상품 UI 기능을 고도화하고, 운영 효율을 위한 사내 관리자(MD) 앱을 개발했습니다.\ MVVM과 RxSwift를 도입해 코드 구조를 개선했습니다.]
+)
 
-// #company-summary(
-//   ("Reactive Programming", "Standardization", "Refactoring"),
-//   [반응형 프로그래밍의 표준 정립. RxSwift 도입으로 비동기 데이터 흐름을 체계화하고 개발 효율을 높였습니다.]
-// )
+#project-item(
+  "[Feature] 태그 기능 추가 및 상품 UI 고도화",
+  "20.02 - 20.07",
+  // Situation
+  [
+    *상품 탐색 경험 개선을 위한 태그 시스템 도입.* \
+    사용자가 상품을 더 쉽게 탐색할 수 있도록 태그 탭과 상품 상세 UI에 태그 기반 필터링 및 노출 기능이 필요했습니다.
+  ],
+  // Behavior
+  [
+    *Custom FlowLayout 및 Reactive 프로그래밍.* \
+    Custom FlowLayout을 구현하여 유동적인 태그 UI를 구성했습니다.\ MVVM 패턴과 RxSwift를 활용해 비동기 데이터 처리와 UI 바인딩을 효율적으로 구현했습니다.
+  ],
+  // Impact
+  [
+    *UX 개선 및 코드 품질 향상.* \
+    직관적인 태그 탐색 환경을 제공하여 사용성을 높였으며, SwiftLint 도입과 리팩토링을 병행해 유지보수성을 강화했습니다.
+  ]
+)
 
-// #project-item(
-//   "RxSwift 도입 및 반응형 프로그래밍 기반 구축",
-//   "2019.07 - 2020.08",
-//   // Situation
-//   [가독성 저하 및 버그 빈발.\ 복잡한 비동기 처리와 상태 동기화가 원인이었습니다.],
-//   // Behavior
-//   [선언형 비동기 로직 전환.\ RxSwift를 도입하여 데이터 흐름을 단방향으로 구조화했습니다.],
-//   // Impact
-//   [탐색 경험 개선.\ 코드 복잡도를 낮추고 반응형 UI를 구축했습니다.]
-// )
+#project-item(
+  "[Admin] MD를 위한 관리자 승인 앱 개발",
+  "19.09 - 19.11",
+  // Situation
+  [
+    *입점 상품 승인 프로세스의 비효율.* \
+    MD가 상품 승인 업무를 처리하기 위한 모바일 환경의 부재로 업무 효율이 저하되는 상황이었습니다.
+  ],
+  // Behavior
+  [
+    *관리자 전용 앱 신규 구축.* \
+    Moya를 활용한 네트워킹 레이어 구축 및 Apple Login 등을 적용하여,\ MD가 외부에서도 빠르게 상품을 검토하고 승인할 수 있는 전용 앱을 개발했습니다.
+  ],
+  // Impact
+  [
+    *운영 업무 효율화.* \
+    모바일 기반의 승인 시스템을 구축하여 MD의 업무 시공간 제약을 해소하고 운영 속도를 높였습니다.
+  ]
+)
 
-// // ---------------------------------------------------------
-// // Other Experience
-// // ---------------------------------------------------------
-// #section-header("Other Experience")
+// MARK: - Carelabs
+#company-header("케어랩스", "2019.02 – 2019.05", "iOS 인턴 | 굿닥", color: rgb("#333333"))
 
-// #company-header("케어랩스 (인턴)", "2019.02 – 2019.05", "굿닥 iOS 개발")
-// #v(0.5em)
-// #text(size: 10pt, fill: apple-black)[
-//   - 네이버 지도 SDK 및 구형 로직 마이그레이션(Obj-C → Swift). 앱 현대화 기여.
-//   - 건강 관리 기능 기획 및 1인 개발. 로컬 알림 기반 서비스 배포.
-// ]
+#company-summary(
+  ("Migration", "Full-Prototyping"),
+  [네이버 지도 SDK의 Swift 마이그레이션을 수행하고, 정규직 전환 과제로 '간헐적 단식' 기능을 기획부터 개발까지 전담하여 서비스 확장 가능성을 검증했습니다.]
+)
 
-// #company-header("한국이엔이", "2015.08 – 2018.09", "임베디드 SW 개발")
-// #v(0.5em)
-// #text(size: 10pt, fill: apple-black)[
-//   - 여신전문금융업법 기준 IC 리더기 암호화. 민감 정보(Track2) 마스킹 로직 구현.
-//   - ISO-8583 금융 표준 준수. 결제 전문 파싱 및 시리얼 통신 프로토콜 설계.
-//   - 보안 인증(KSEL) 20회 이상 획득. VAN사 및 POS 연동으로 금융 보안 무결성 입증.
-// ]
+#project-item(
+  "[Migration & Full-cycle] 레거시 마이그레이션 및 신규 기능 PoC",
+  "19.02 - 19.05",
+  // Situation
+  [
+    *기술 스택 전환 및 유저 락인(Lock-in)을 위한 기능 발굴.* \
+    Objective-C 기반의 지도 SDK를 Swift로 전환해야 했으며,\ 실제 프로덕트에 기여할 수 있는 과제 요청에 유저 리텐션용 부가 기능(간헐적 단식) 기능을 생각하였습니다.
+  ],
+  // Behavior
+  [
+    *Obj-C to Swift 전환 및 1인 풀사이클(Full-cycle) 개발.* \
+    지도 SDK 연동 코드를 Swift로 마이그레이션하여 모던 환경을 구축했습니다.\ 또한 '간헐적 단식' 기능을 직접 기획/디자인하고, \`LocalNotification\`을 활용하여 개발하였습니다.
+  ],
+  // Impact
+  [
+    *최신 개발 환경 도입 및 서비스 확장성 검증.* \
+    성공적인 마이그레이션으로 유지보수 효율을 높였으며, 기획부터 개발까지 주도한 프로토타입을 통해\ 헬스케어 부가 서비스의 확장 가능성을 제시하였습니다.
+  ]
+)
 
-// #company-header("케이엠데이타 / 나무가", "2013.09 – 2015.07", "임베디드 & 생산기술")
-// #v(0.5em)
-// #text(size: 10pt, fill: apple-black)[
-//   - Green Hills RTOS 기반 전장 시스템 디버깅. 미션 크리티컬 환경의 안정성 확보.
-//   - 카메라 모듈 공정 표준화 및 양산 승인. 삼성전자 납품 품질 기준 확립.
-// ]
+// MARK: - Other Experiences header
+#v(-10pt)
+#text(size: 16pt, weight: "bold", fill: apple-black)[그 외 경력 (Embedded & H/W)]
+#v(-8pt)
+#line(length: 100%, stroke: 1pt + apple-border)
 
-// #section-header("Other Experience")
+// 1. 한국이엔이
+#v(-6pt)
+#company-header("한국이엔이", "2015.08 – 2018.08", "임베디드 SW 개발", color: rgb("#333333"))
+#text(size: 10pt, fill: black)[
+  - 여신전문금융업법 기술 기준에 맞춰 IC 리더기 암호화 및 민감 정보(Track2) 마스킹 로직 구현
+  - ISO-8583 금융 표준 규격을 준수한 결제 전문 파싱 및 시리얼 통신 프로토콜 설계
+  - GUI(Qt) 개발 및 VAN/POS 연동 보안 인증(K-SEL)을 주도하며 3년간 금융 보안 무결성 입증
+]
 
-// #company-header("케어랩스 (인턴)", "2019.02 – 2019.05", "굿닥 iOS 개발")
-// #v(0.5em)
-// #text(size: 10pt, fill: apple-black)[
-//   - 네이버 지도 SDK 및 구형 로직을 Obj-C에서 Swift로 마이그레이션하여 앱 현대화 기여
-//   - 로컬 알림 기반의 건강 관리 기능을 기획부터 구현까지 1인 개발하여 배포
-// ]
-
-// #company-header("한국이엔이", "2015.08 – 2018.09", "임베디드 SW 개발")
-// #v(0.5em)
-// #text(size: 10pt, fill: apple-black)[
-//   - 여신전문금융업법 기술 기준에 맞춰 IC 리더기 암호화 및 민감 정보(Track2) 마스킹 로직 구현
-//   - ISO-8583 금융 표준 규격을 준수한 결제 전문 파싱 및 시리얼 통신 프로토콜 설계
-//   - VAN사/POS 연동에 따른 보안 인증(KSEL) 20회 이상 획득하며 금융 보안 무결성 입증
-// ]
-
-// #company-header("케이엠데이타 / 나무가", "2013.09 – 2015.07", "임베디드 & 생산기술")
-// #v(0.5em)
-// #text(size: 10pt, fill: apple-black)[
-//   - Green Hills RTOS 기반 전장 시스템의 크래시 디버깅을 통해 미션 크리티컬 환경의 안정성 확보
-//   - 삼성전자 납품용 카메라 모듈의 공정 표준화 및 양산 승인 프로세스를 담당하며 품질 기준 확립
-// ]
-
+// 2. 케이엠데이타.
+#v(-6pt)
+#company-header("케이엠데이타", "2014.07 – 2015.08", "임베디드 솔루션 기술지원", color: rgb("#333333"))
+#text(size: 10pt, fill: black)[
+  - Green Hills RTOS 기반 전장 시스템의 크래시 디버깅(J-Tag)을 통해 미션 크리티컬 환경의 안정성 지원
+  - 차량용 임베디드 솔루션의 기술 이슈 대응 및 시스템 최적화 가이드 제공
+]
+// 3. 나무가
+#v(-6pt)
+#company-header("나무가", "2013.07 – 2014.03", "카메라 모듈 공정 기술", color: rgb("#333333"))
+#text(size: 10pt, fill: black)[
+  - 삼성전자 납품용 5M 후면 카메라 모듈의 후공정 셋업 및 생산 라인 표준화 담당
+  - 양산 승인 프로세스 관리 및 회로 검증을 통해 모듈 품질 기준(QA) 확립
+]
